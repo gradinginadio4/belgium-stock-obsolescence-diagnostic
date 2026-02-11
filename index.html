@@ -4,126 +4,254 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diagnostic d’Obsolescence des Stocks | Homieux Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --primary-blue: #000887;
             --accent-pink: #ED51C2;
             --bg-white: #FFFFFF;
-            --text-dark: #1A1A1A;
-            --gray-light: #F4F4F9;
+            --text-dark: #000442;
+            --text-muted: #64748b;
+            --gray-light: #F8FAFC;
+            --border-color: #E2E8F0;
+            --shadow-premium: 0 20px 50px -12px rgba(0, 8, 135, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Epilogue', sans-serif;
             margin: 0;
             padding: 0;
             color: var(--text-dark);
             background-color: var(--bg-white);
-            line-height: 1.6;
+            line-height: 1.7;
+            text-align: center;
         }
 
         header {
-            padding: 20px 5%;
+            padding: 40px 5%;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border-bottom: 1px solid #EEE;
+            background: transparent;
         }
 
         .logo {
-            height: 50px;
+            height: 44px;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
         }
 
         .container {
             max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
+            margin: 0 auto 80px auto;
+            padding: 0 24px;
         }
 
         .card {
             background: white;
-            padding: 40px;
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,8,135,0.05);
-            border: 1px solid #F0F0F0;
+            padding: 60px 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        h1 { color: var(--primary-blue); font-size: 2rem; margin-bottom: 10px; }
-        p.subtitle { color: #666; margin-bottom: 30px; }
+        h1 { 
+            color: var(--primary-blue); 
+            font-size: 2.2rem; 
+            font-weight: 700; 
+            margin-bottom: 16px; 
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        p.subtitle { 
+            color: var(--text-muted); 
+            font-size: 1.1rem; 
+            margin-bottom: 40px; 
+            max-width: 500px;
+        }
 
         .stat-box {
             background: var(--gray-light);
-            padding: 15px;
+            padding: 24px;
+            border-radius: 8px;
             border-left: 4px solid var(--primary-blue);
-            font-size: 0.9rem;
-            margin: 20px 0;
+            font-size: 0.95rem;
+            margin: 24px 0;
+            text-align: center;
+            width: 100%;
+            color: var(--text-dark);
         }
 
-        .question-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #F0F0F0;
+        .stat-box strong {
+            color: var(--primary-blue);
+            display: block;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
         }
 
-        .btn-group { display: flex; gap: 10px; }
+        .btn-group { 
+            display: flex; 
+            gap: 16px; 
+            margin-top: 32px;
+            width: 100%;
+            justify-content: center;
+        }
 
-        button {
-            padding: 10px 25px;
-            border-radius: 4px;
-            border: 1px solid var(--primary-blue);
+        button, .btn-main {
+            font-family: 'Epilogue', sans-serif;
+            padding: 18px 32px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.2s;
+            transition: var(--transition);
+            font-size: 1rem;
+            border: 1px solid var(--primary-blue);
         }
 
-        .btn-option { background: white; color: var(--primary-blue); }
-        .btn-option.active { background: var(--primary-blue); color: white; }
+        .btn-option { 
+            background: white; 
+            color: var(--primary-blue); 
+            flex: 1;
+            max-width: 160px;
+        }
+
+        .btn-option:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
 
         .btn-main {
-            background: var(--accent-pink);
+            background: var(--primary-blue);
             color: white;
-            border: none;
             width: 100%;
-            font-size: 1.1rem;
-            padding: 18px;
-            margin-top: 20px;
+            max-width: 450px;
+            border: none;
+            margin-top: 24px;
             text-decoration: none;
             display: inline-block;
-            text-align: center;
+            box-shadow: 0 4px 14px 0 rgba(0, 8, 135, 0.2);
+        }
+
+        .btn-main:hover {
+            background: #000666;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 8, 135, 0.25);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            margin-top: 16px;
+            padding: 12px 24px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+            color: var(--text-dark);
+        }
+
+        #question-zone h3 {
+            color: var(--accent-pink);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        #question-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            min-height: 100px;
+            max-width: 600px;
+            color: var(--primary-blue);
         }
 
         #result-zone { display: none; }
 
-        .gauge-container {
-            height: 12px;
-            background: #EEE;
-            border-radius: 10px;
-            margin: 25px 0;
-            overflow: hidden;
+        .score-circle {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 20px 0;
         }
 
-        .gauge-fill { height: 100%; width: 0%; transition: width 1s ease-in-out; }
+        .gauge-container {
+            height: 8px;
+            background: #F1F5F9;
+            border-radius: 10px;
+            margin: 20px 0 40px 0;
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .gauge-fill { height: 100%; width: 0%; transition: width 1.2s cubic-bezier(0.65, 0, 0.35, 1); }
+
+        .board-ready-list { 
+            list-style: none; 
+            padding: 0; 
+            margin: 32px 0;
+            width: 100%;
+        }
+        .board-ready-list li { 
+            padding: 16px 20px; 
+            margin-bottom: 12px; 
+            background: #F8FAFC; 
+            border-radius: 8px; 
+            font-size: 0.95rem;
+            color: var(--primary-blue);
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+        .board-ready-list li:hover {
+            border-color: var(--border-color);
+            background: white;
+        }
+
+        hr {
+            width: 100px;
+            border: none;
+            border-top: 2px solid var(--accent-pink);
+            margin: 40px auto;
+        }
 
         footer {
-            text-align: center;
-            padding: 40px;
-            font-size: 0.8rem;
-            color: #999;
+            padding: 60px 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
-        a { color: inherit; text-decoration: none; }
-        
-        .board-ready-list { list-style: none; padding: 0; }
-        .board-ready-list li { 
-            padding: 12px; 
-            margin-bottom: 8px; 
-            background: #F9F9FF; 
-            border-radius: 4px; 
-            font-style: italic;
+        footer a { 
+            color: var(--primary-blue); 
+            font-weight: 600; 
+            text-decoration: none; 
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 40px 24px; }
+            h1 { font-size: 1.75rem; }
+            #question-text { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -141,9 +269,9 @@
         <p class="subtitle">Estimez votre trésorerie bloquée en 10 points stratégiques.</p>
         
         <div class="stat-box">
-            📍 <strong>Contexte Belgique 2025-2026</strong><br>
-            Le délai moyen de paiement entre entreprises en Belgique s'est stabilisé à 41 jours, accentuant la pression sur le besoin en fonds de roulement (BFR).<br>
-            Source : Graydon 2025
+            📍 <strong>Contexte Belgique 2025-2026</strong>
+            Le délai moyen de paiement entre entreprises en Belgique s'est stabilisé à 41 jours, accentuant la pression sur le besoin en fonds de roulement (BFR).
+            <br><small style="opacity:0.7">Source : Graydon 2025</small>
         </div>
 
         <button class="btn-main" onclick="startApp()">Commencer le diagnostic</button>
@@ -151,7 +279,7 @@
 
     <div id="question-zone" class="card" style="display:none;">
         <h3 id="step-title">Question 1/10</h3>
-        <p id="question-text" style="font-size: 1.2rem; min-height: 80px;"></p>
+        <p id="question-text"></p>
         
         <div class="btn-group">
             <button class="btn-option" onclick="handleAnswer(1)">OUI</button>
@@ -161,31 +289,35 @@
 
     <div id="result-zone" class="card">
         <h1>Analyse de votre situation</h1>
-        <p>Score d'obsolescence : <strong><span id="score-val">0</span>/10</strong></p>
+        
+        <div class="score-circle"><span id="score-val">0</span><small style="font-size: 1.5rem; opacity: 0.4;">/10</small></div>
         
         <div class="gauge-container">
             <div id="gauge" class="gauge-fill"></div>
         </div>
 
-        <p id="score-msg" style="font-weight: 500;"></p>
-        <p style="font-size: 0.9rem; color: #666;">
+        <p id="score-msg" style="font-weight: 600; font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 8px;"></p>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 40px; max-width: 450px;">
             Note : Plus le score est élevé, plus la probabilité d’immobilisation opérationnelle est significative.
         </p>
 
         <div class="stat-box">
-            📍 <strong>Contexte Belgique 2025-2026</strong><br>
-            En 2025, environ 14% des PME belges dans le secteur de la distribution technique rapportent un stock dormant supérieur à 12 mois.<br>
-            Source : BNB (Banque Nationale de Belgique) 2025
+            📍 <strong>Contexte Belgique 2025-2026</strong>
+            En 2025, environ 14% des PME belges dans le secteur de la distribution technique rapportent un stock dormant supérieur à 12 mois.
+            <br><small style="opacity:0.7">Source : BNB (Banque Nationale de Belgique) 2025</small>
         </div>
 
         <hr>
         
-        <h3>Reformulations Board-Ready</h3>
-        <div class="stat-box" style="margin-bottom:10px;">
-            📍 <strong>Contexte Belgique 2025-2026</strong><br>
-            La transition vers l'économie circulaire pousse 62% des entreprises industrielles belges à réévaluer la valorisation de leurs actifs dormants.<br>
-            Source : Agoria 2026
+        <h3 style="color: var(--primary-blue); font-weight: 700; margin-bottom: 8px;">Reformulations Board-Ready</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Éléments de langage pour vos comités de direction</p>
+
+        <div class="stat-box" style="margin-bottom:24px;">
+            📍 <strong>Contexte Belgique 2025-2026</strong>
+            La transition vers l'économie circulaire pousse 62% des entreprises industrielles belges à réévaluer la valorisation de leurs actifs dormants.
+            <br><small style="opacity:0.7">Source : Agoria 2026</small>
         </div>
+
         <ul class="board-ready-list">
             <li>"Optimisation du cycle de rotation des actifs circulants pour alléger le bilan."</li>
             <li>"Analyse de la vélocité des stocks pour réduire l'exposition au risque de dépréciation."</li>
@@ -194,9 +326,9 @@
             <li>"Amélioration de la liquidité immédiate par la conversion des actifs immobilisés."</li>
         </ul>
 
-        <button onclick="generatePDF()" style="background:none; border: 1px solid #CCC; width:100%; margin-top:15px; cursor:pointer; padding:10px;">Télécharger le compte-rendu PDF</button>
-
         <a id="calendly-link" href="#" class="btn-main">Discutons de votre cas concret – 30 min sans engagement</a>
+        
+        <button class="btn-secondary" onclick="generatePDF()">Télécharger le compte-rendu PDF premium</button>
     </div>
 </div>
 
@@ -224,13 +356,13 @@
 
     function startApp() {
         document.getElementById('setup-zone').style.display = 'none';
-        document.getElementById('question-zone').style.display = 'block';
+        document.getElementById('question-zone').style.display = 'flex';
         showQuestion();
     }
 
     function showQuestion() {
         if(currentStep < questions.length) {
-            document.getElementById('step-title').innerText = `Analyse : Point ${currentStep + 1}/10`;
+            document.getElementById('step-title').innerText = `Question ${currentStep + 1}/10`;
             document.getElementById('question-text').innerText = questions[currentStep];
         } else {
             showResults();
@@ -245,42 +377,115 @@
 
     function showResults() {
         document.getElementById('question-zone').style.display = 'none';
-        document.getElementById('result-zone').style.display = 'block';
-        
+        document.getElementById('result-zone').style.display = 'flex';
         document.getElementById('score-val').innerText = score;
         
         const gauge = document.getElementById('gauge');
         const msg = document.getElementById('score-msg');
         
-        let color = "#27ae60"; // Vert
+        let color = "#22c55e"; 
         let text = "Situation maîtrisée. Votre stock semble sain.";
 
         if(score >= 4 && score <= 7) {
-            color = "#f1c40f"; // Jaune
+            color = "#f59e0b"; 
             text = "Vigilance requise. Des zones d'immobilisation ralentissent votre trésorerie.";
         } else if(score > 7) {
-            color = "#e74c3c"; // Rouge
+            color = "#ef4444"; 
             text = "Alerte critique. Votre stock impacte significativement votre agilité financière.";
         }
 
-        gauge.style.width = (score * 10) + "%";
-        gauge.style.backgroundColor = color;
+        setTimeout(() => {
+            gauge.style.width = (score * 10) + "%";
+            gauge.style.backgroundColor = color;
+        }, 100);
+        
         msg.innerText = text;
-
         const calendlyBase = "https://calendly.com/homieuxmedia/discovery-call-gratuit-discutons-de-vos-defis";
         document.getElementById('calendly-link').href = `${calendlyBase}?score=${score}/10`;
     }
 
     function generatePDF() {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const scoreMsg = document.getElementById('score-msg').innerText;
+        const dateStr = new Date().toLocaleDateString('fr-FR');
+        
+        // Configuration Couleurs
+        const blue = [0, 8, 135];
+        const pink = [237, 81, 194];
+        const gray = [100, 116, 139];
+
+        // Header Branding
+        doc.setDrawColor(pink[0], pink[1], pink[2]);
+        doc.setLineWidth(1);
+        doc.line(20, 25, 190, 25);
+        
+        doc.setTextColor(blue[0], blue[1], blue[2]);
         doc.setFont("helvetica", "bold");
-        doc.text("Diagnostic d’Obsolescence des Stocks", 20, 20);
+        doc.setFontSize(22);
+        doc.text("RAPPORT DE DIAGNOSTIC", 20, 45);
+        doc.setFontSize(14);
+        doc.text("Obsolescence des Stocks & Trésorerie", 20, 55);
+        
+        doc.setTextColor(gray[0], gray[1], gray[2]);
+        doc.setFontSize(10);
+        doc.text(`Généré le ${dateStr} pour Homieux Media`, 190, 45, {align: 'right'});
+
+        // Score Section
+        doc.setFillColor(248, 250, 252);
+        doc.rect(20, 70, 170, 40, 'F');
+        
+        doc.setTextColor(blue[0], blue[1], blue[2]);
+        doc.setFontSize(32);
+        doc.text(`${score}/10`, 35, 95);
+        
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text(scoreMsg, 75, 88);
         doc.setFont("helvetica", "normal");
-        doc.text(`Score : ${score}/10`, 20, 30);
-        doc.text("Date : " + new Date().toLocaleDateString(), 20, 40);
-        doc.text("Note : Ce document est une estimation d'immobilisation.", 20, 60);
-        doc.save("Diagnostic-Stock-Homieux.pdf");
+        doc.setFontSize(10);
+        doc.setTextColor(gray[0], gray[1], gray[2]);
+        doc.text("Indice de probabilité d'immobilisation opérationnelle.", 75, 96);
+
+        // Contexte Sectoriel
+        doc.setTextColor(blue[0], blue[1], blue[2]);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("CONTEXTE SECTORIEL BELGIQUE 2025-2026", 20, 125);
+        
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        const sectorText = "En 2025, environ 14% des PME belges dans le secteur de la distribution technique rapportent un stock dormant supérieur à 12 mois (Source: BNB). La transition circulaire pousse 62% des entreprises à réévaluer leurs actifs (Source: Agoria).";
+        const splitText = doc.splitTextToSize(sectorText, 170);
+        doc.text(splitText, 20, 135);
+
+        // Reformulations Board-Ready
+        doc.setTextColor(blue[0], blue[1], blue[2]);
+        doc.setFont("helvetica", "bold");
+        doc.text("REFORMULATIONS STRATÉGIQUES (BOARD-READY)", 20, 165);
+        
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(10);
+        doc.setTextColor(gray[0], gray[1], gray[2]);
+        const points = [
+            "- Optimisation du cycle de rotation des actifs circulants pour alléger le bilan.",
+            "- Analyse de la vélocité des stocks pour réduire l'exposition au risque de dépréciation.",
+            "- Réalignement des provisions pour stocks à rotation lente sur les standards sectoriels.",
+            "- Rationalisation de l'empreinte logistique par l'épuration des références à faible rotation.",
+            "- Amélioration de la liquidité immédiate par la conversion des actifs immobilisés."
+        ];
+        doc.text(points, 20, 175);
+
+        // Footer
+        doc.setDrawColor(226, 232, 240);
+        doc.line(20, 260, 190, 260);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.setTextColor(gray[0], gray[1], gray[2]);
+        doc.text("Diagnostic confidentiel réalisé par Homieux Media - https://homieuxmedia.com/", 105, 270, {align: 'center'});
+
+        doc.save(`Diagnostic_Stock_Homieux_${dateStr.replace(/\//g,'-')}.pdf`);
     }
 </script>
 
